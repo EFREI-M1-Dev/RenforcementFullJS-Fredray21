@@ -15,6 +15,7 @@ export class UserJSONService implements UserService {
     }
 
     getById(id: number): User | null {
-        throw new Error('Method not implemented.');
+        return new User(1, 'username', 'email', 'password');
+        //throw new Error('Method not implemented.');
     }
 }
