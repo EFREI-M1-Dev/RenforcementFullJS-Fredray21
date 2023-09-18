@@ -9,7 +9,7 @@
     "format": "prettier --write \"src/**/*.ts\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Fredray-21",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.3.1",

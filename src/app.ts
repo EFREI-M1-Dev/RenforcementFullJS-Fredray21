@@ -1,6 +1,4 @@
-import express from 'express';
+import { ExpressApplication } from './infrastructure/express-application';
 
-const app = express();
-const port = 3000;
+new ExpressApplication().bootstrap();
 
-app.listen(port, () => console.log(`> Listening on port ${port}`));
