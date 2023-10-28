@@ -3,13 +3,15 @@ import { UserService } from './UserService';
 import * as fs from 'fs';
 
 export class UserJSONService implements UserService {
-    add(username: string, email: string, password: string): User {
-        const dataFilePath = './src/data/userData.json';
-        const users: User[] = fs.existsSync(dataFilePath) ? this.getAll() : [];
 
-        if (!fs.existsSync(dataFilePath)) {
+    private filePath: string = "./src/data/userData.json";
+
+    add(username: string, email: string, password: string): User {
+        const users: User[] = fs.existsSync(this.filePath) ? this.getAll() : [];
+
+        if (!fs.existsSync(this.filePath)) {
             fs.mkdirSync('./src/data', { recursive: true });
-            fs.writeFileSync(dataFilePath, '[]', 'utf8');
+            fs.writeFileSync(this.filePath, '[]', 'utf8');
         }
 
         // Trouver l'ID le plus élevé parmi les utilisateurs existants
@@ -30,7 +32,7 @@ export class UserJSONService implements UserService {
 
         // Écrire les utilisateurs dans le fichier JSON
         fs.writeFileSync(
-            './src/data/userData.json',
+            this.filePath,
             JSON.stringify(users),
             'utf8',
         );
@@ -46,7 +48,7 @@ export class UserJSONService implements UserService {
         }
         users.splice(index, 1);
         fs.writeFileSync(
-            './src/data/userData.json',
+            this.filePath,
             JSON.stringify(users),
             'utf8',
         );
@@ -56,7 +58,7 @@ export class UserJSONService implements UserService {
     getAll(): User[] {
         try {
             // Read JSON User file
-            const data = fs.readFileSync('./src/data/userData.json', 'utf8');
+            const data = fs.readFileSync(this.filePath, 'utf8');
             const jsonData = JSON.parse(data);
 
             // Créer des instances de User à partir des données JSON
