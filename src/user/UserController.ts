@@ -29,21 +29,35 @@ export class UserController {
     }
 
 
-    // checks
+    // 1. id est un entier positif
     private checkId(id: number): void {
-        if(id < 0) throw new Error('Id is not valid');
-        if(isNaN(id) || !Number.isInteger(id)) throw new Error('Id is not valid');
+        const idRegex = /^(0|[1-9]\d*)$/;
+        if (!idRegex.test(String(id))) {
+            throw new Error('Id is not valid, must be a positive integer');
+        }
     }
 
+    // 2. username n'est pas vide
     private checkUsername(username: string): void {
-        if(username.trim() === '') throw new Error('Username is empty');
+        const usernameRegex = /^\s*$/;
+        if (usernameRegex.test(username)) {
+            throw new Error('Username is empty');
+        }
     }
 
+    // 3. email est valide
     private checkEmail(email: string): void {
-        if(!email.includes('@')) throw new Error('Email is not valid');
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        if (!emailRegex.test(email)) {
+            throw new Error('Email is not valid');
+        }
     }
 
+    // 4. password est assez fort (au moins 8 caractères, une majuscule, une minuscule et un chiffre)
     private checkPassword(password: string): void {
-        if(password.length < 8) throw new Error('Password is not strong enough');
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            throw new Error('Password is not strong enough');
+        }
     }
 }
