@@ -9,17 +9,33 @@ export class UserRouter {
     }
 
     private configureRoutes(): void {
-        this.router.post('/add-user', (req, res,next) => {
+        //add
+        this.router.post('/', (req, res,next) => {
             try {
-                const { username, email, password } = req.body;
-                const newUser = this.userController.add(username, email, password);
-                res.status(201).json(newUser);
+                const result = this.userController.add(
+                    req.body.username,
+                    req.body.email,
+                    req.body.password,
+                );
+                res.status(200).json(result);
             } catch (error: unknown) {
-                //res.status(400).json({ message: error });
                 next(error);
             }
         });
 
+        //delete
+        this.router.delete('/:id', (req, res,next) => {
+            try {
+                const result = this.userController.remove(
+                    Number(req.params.id),
+                );
+                res.status(200).json(result);
+            } catch (error: unknown) {
+                next(error);
+            }
+        });
+
+        //get
         this.router.get('/:id', (req, res,next) => {
             try {
                 const result = this.userController.getById(
@@ -27,7 +43,16 @@ export class UserRouter {
                 );
                 res.status(200).json(result);
             } catch (error: unknown) {
-                //res.status(400).json({ message: error });
+                next(error);
+            }
+        });
+
+        //all
+        this.router.get('/', (req, res,next) => {
+            try {
+                const result = this.userController.getAll();
+                res.status(200).json(result);
+            } catch (error: unknown) {
                 next(error);
             }
         });

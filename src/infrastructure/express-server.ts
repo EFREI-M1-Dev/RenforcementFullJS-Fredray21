@@ -8,6 +8,7 @@ export class ExpressServer {
         private expressRouter: ExpressRouter,
         private port: string,
     ) {
+        this.setupMiddleware();
         this.configureRoutes();
     }
 
@@ -19,5 +20,13 @@ export class ExpressServer {
 
     private configureRoutes(): void {
         this.express.use('/api', this.expressRouter.router);
+    }
+
+    private setupMiddleware(): void {
+        // Middleware pour analyser les données du formulaire
+        this.express.use(express.urlencoded({ extended: false }));
+
+        // Middleware pour analyser les données JSON
+        this.express.use(express.json());
     }
 }

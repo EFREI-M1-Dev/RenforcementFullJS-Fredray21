@@ -51,9 +51,7 @@ export class ExpressApplication {
 
     private getPort(): string {
         const port = process.env.PORT;
-        if (!port) {
-            throw new Error('No port was found in env file.');
-        }
+        if (!port) throw new Error('No port was found in env file.');
         return port;
     }
 }

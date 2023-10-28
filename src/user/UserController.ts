@@ -29,9 +29,6 @@ export class UserController {
     }
 
 
-
-
-
     // checks
     private checkId(id: number): void {
         if(id < 0) throw new Error('Id is not valid');
